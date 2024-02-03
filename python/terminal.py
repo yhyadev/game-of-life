@@ -69,7 +69,7 @@ class Generation:
 
 
 def play():
-    generation = Generation(150, 150)
+    generation = Generation(170, 170)
     generation.random()
 
     while True:

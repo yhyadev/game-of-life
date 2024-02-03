@@ -34,8 +34,8 @@ class Generation:
                 if dx == 0 and dy == 0:
                     continue
 
-                x = ((ix + dx) - self.width) % self.width
-                y = ((iy + dy) - self.height) % self.height
+                x = (ix + dx) % self.width
+                y = (iy + dy) % self.height
 
                 if self.cells[y][x]:
                     amount += 1

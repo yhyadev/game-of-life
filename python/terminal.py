@@ -12,10 +12,10 @@ class Generation:
 
     def display(self):
         for y in range(self.height):
-            print()
-
             for x in range(self.width):
                 print("●" if self.cells[y][x] else " ", end="")
+
+            print()
 
     def random(self):
         for y in range(self.height):

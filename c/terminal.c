@@ -69,28 +69,13 @@ void generation_update(Generation gen) {
 			int alive_neighbours =
 				generation_calculate_alive_neighbours(gen, x, y);
 
-			int next_state = 0;
+			int current_cell = gen[y][x];
 
-			switch (gen[y][x]) {
-			case 0: {
-				if (alive_neighbours == 3) {
-					next_state = 1;
-				}
-
-				break;
-			}
-
-			case 1: {
-				if (alive_neighbours == 2 || alive_neighbours == 3) {
-					next_state = 1;
-				}
-
-				break;
-			}
-
-			default:
-				break;
-			}
+			int next_state = ((current_cell && (alive_neighbours == 2 ||
+												alive_neighbours == 3)) ||
+							  (!current_cell && alive_neighbours == 3))
+								 ? 2
+								 : 0;
 
 			next_gen[y][x] = next_state;
 		}
@@ -112,7 +97,8 @@ int main(void) {
 		generation_display(gen);
 		generation_update(gen);
 
-        for (int i = 0; i < 40000000; i++);
+		for (int i = 0; i < 40000000; i++)
+			;
 	}
 
 	return 0;

@@ -1,7 +1,5 @@
 import random
 
-from typing import Self
-
 
 class Generation:
     def __init__(self, width: int, height: int):
@@ -22,9 +20,6 @@ class Generation:
             for x in range(self.width):
                 if random.random() > 0.90:
                     self.cells[y][x] = 1
-
-    def swap(self, other_gen: Self):
-        self.cells = other_gen.cells
 
     def calculate_alive_neigbours(self, ix: int, iy: int):
         amount = 0
@@ -49,23 +44,18 @@ class Generation:
             for x in range(self.width):
                 alive_neighbours = self.calculate_alive_neigbours(x, y)
 
-                match self.cells[y][x]:
-                    case 0:
-                        if alive_neighbours == 3:
-                            new_state = 1
-                        else:
-                            new_state = 0
-                    case 1:
-                        if alive_neighbours == 2 or alive_neighbours == 3:
-                            new_state = 1
-                        else:
-                            new_state = 0
-                    case _:
-                        new_state = 0
+                current_cell = self.cells[y][x]
 
-                next_gen.cells[y][x] = new_state
+                if (
+                    current_cell and (alive_neighbours == 2 or alive_neighbours == 3)
+                ) or (not current_cell and alive_neighbours == 3):
+                    next_state = 1
+                else:
+                    next_state = 0
 
-        self.swap(next_gen)
+                next_gen.cells[y][x] = next_state
+
+        self.cells = next_gen.cells
 
 
 def play():

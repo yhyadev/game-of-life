@@ -74,7 +74,7 @@ void generation_update(Generation gen) {
 			int next_state = ((current_cell && (alive_neighbours == 2 ||
 												alive_neighbours == 3)) ||
 							  (!current_cell && alive_neighbours == 3))
-								 ? 2
+								 ? 1
 								 : 0;
 
 			next_gen[y][x] = next_state;

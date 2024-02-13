@@ -33,7 +33,6 @@ class Generation {
         for (let y = 0; y < this.height; y++) {
             for (let x = 0; x < this.width; x++) {
                 if (this.cells[y][x]) {
-                    console.log(y, x);
                     rect(
                         x * w,
                         y * h,

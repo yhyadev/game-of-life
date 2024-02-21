@@ -24,23 +24,14 @@ class Generation {
     }
 
     display() {
-        let w = width / this.width;
-        let h = height / this.height;
-
-        stroke(255);
-        fill(0);
-
         for (let y = 0; y < this.height; y++) {
+            let line = "";
+
             for (let x = 0; x < this.width; x++) {
-                if (this.cells[y][x]) {
-                    rect(
-                        x * w,
-                        y * h,
-                        w,
-                        h,
-                    );
-                }
+                line += this.cells[y][x] ? "●" : " ";
             }
+
+            console.log(line);
         }
     }
 
@@ -77,7 +68,7 @@ class Generation {
                 let next_state =
                     (current_cell &&
                         (alive_neighbours == 2 || alive_neighbours == 3)) ||
-                        (!current_cell && alive_neighbours == 3)
+                    (!current_cell && alive_neighbours == 3)
                         ? 1
                         : 0;
 
@@ -89,29 +80,15 @@ class Generation {
     }
 }
 
-let generation;
+let generation = new Generation(170, 170);
 
-function setup() {
-    frameRate(10);
-
-    createCanvas(480, 480);
-
-    generation = new Generation(width / 5, height / 5);
-
+function play() {
     generation.random();
+
+    while (true) {
+        generation.display();
+        generation.update();
+    }
 }
 
-function mouseDragged() {
-    let x = floor(map(mouseX, 1, width, 0, generation.width));
-
-    let y = floor(map(mouseY, 1, width, 0, generation.height));
-
-    generation.cells[y][x] = 1;
-}
-
-function draw() {
-    background(0);
-
-    generation.display();
-    generation.update();
-}
+play();

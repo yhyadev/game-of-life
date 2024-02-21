@@ -1,3 +1,4 @@
+import math
 import random
 
 
@@ -18,8 +19,7 @@ class Generation:
     def random(self):
         for y in range(self.height):
             for x in range(self.width):
-                if random.random() > 0.90:
-                    self.cells[y][x] = 1
+                self.cells[y][x] = math.floor(random.random() * 2)
 
     def calculate_alive_neigbours(self, ix: int, iy: int):
         amount = 0

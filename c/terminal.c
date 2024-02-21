@@ -18,11 +18,7 @@ typedef int Generation[GENERATION_WIDTH][GENERATION_HEIGHT];
 void generation_display(Generation gen) {
 	for (size_t y = 0; y < GENERATION_HEIGHT; y++) {
 		for (size_t x = 0; x < GENERATION_WIDTH; x++) {
-			if (gen[y][x]) {
-				printf("●");
-			} else {
-				printf(" ");
-			}
+            printf(gen[y][x] ? "●" : " ");
 		}
 
 		printf("\n");
@@ -32,9 +28,7 @@ void generation_display(Generation gen) {
 void generation_random(Generation gen) {
 	for (size_t y = 0; y < GENERATION_HEIGHT; y++) {
 		for (size_t x = 0; x < GENERATION_WIDTH; x++) {
-			if (frand() > 0.90) {
-				gen[y][x] = 1;
-			}
+            gen[y][x] = (int)(frand() * 2);
 		}
 	}
 }

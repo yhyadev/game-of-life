@@ -1,8 +1,3 @@
-function mod(a, b) {
-    let r = a % b;
-    return r < 0 ? r + b : r;
-}
-
 class Generation {
     constructor(width, height) {
         this.cells = new Array(height);
@@ -44,8 +39,8 @@ class Generation {
                     continue;
                 }
 
-                let x = mod(ix + dx, this.width);
-                let y = mod(iy + dy, this.height);
+                let x = (ix + dx) % this.width;
+                let y = (iy + dy) % this.height;
 
                 if (this.cells[y][x]) {
                     amount += 1;

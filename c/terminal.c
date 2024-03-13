@@ -5,11 +5,6 @@
 
 float frand(void) { return (float)rand() / (float)RAND_MAX; }
 
-int mod(int a, int b) {
-	int r = a % b;
-	return r < 0 ? r + b : r;
-}
-
 #define GENERATION_WIDTH 170
 #define GENERATION_HEIGHT 170
 
@@ -42,9 +37,8 @@ int generation_calculate_alive_neighbours(Generation gen, size_t ix,
 			if (dx == 0 && dy == 0)
 				continue;
 
-			size_t x = mod(ix + dx, GENERATION_WIDTH);
-
-			size_t y = mod(iy + dy, GENERATION_HEIGHT);
+			size_t x = (ix + dx) % GENERATION_WIDTH;
+			size_t y = (iy + dy) % GENERATION_HEIGHT;
 
 			if (gen[y][x]) {
 				amount++;

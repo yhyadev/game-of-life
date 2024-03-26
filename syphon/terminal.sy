@@ -1,0 +1,169 @@
+fn floor(n) {
+    return n - n % 1;
+}
+
+fn gen_init(gen) {
+    let y = 0;
+
+    while y < height {
+        array_push(gen, []);
+
+        let x = 0;
+
+        while x < width {
+            array_push(gen[y], 0);
+
+            x = x + 1;
+        }
+
+        y = y + 1;
+    }
+}
+
+fn gen_display() {
+    let y = 0;
+
+    while y < height {
+        let x = 0;
+
+        while x < width {
+            if gen[y][x] {
+                print("*");
+            } else {
+                print(" ");
+            }
+
+            x = x + 1;
+        }
+
+        println();
+
+        y = y + 1;
+    }
+}
+
+fn gen_randomize() {
+    let y = 0;
+
+    while y < height {
+        let x = 0;
+
+        while x < width {
+            if random(0, 2) > 0.95 {
+                gen[y][x] = 1;
+            }
+
+            x = x + 1;
+        }
+
+        y = y + 1;
+    }
+}
+
+fn gen_calculate_alive_neigbours(ix, iy) {
+    let amount = 0;
+
+    let dy = -1;
+
+    while dy < 2 {
+        let dx = -1;
+
+        while dx < 2 {
+            if dx == 0 {
+                if dy == 0 {
+                    dx = dx + 1;
+                    dy = dy + 1;
+
+                    continue
+                }
+            }
+
+            let x = (ix + dx) % width;
+            let y = (iy + dy) % height;
+
+            if gen[y][x] {
+                amount = amount + 1;
+            }
+
+            dx = dx + 1;
+        }
+
+        dy = dy + 1;
+    }
+
+    return amount;
+}
+
+fn gen_update() {
+    let next_gen = [];
+
+    gen_init(next_gen);
+
+    let y = 0;
+
+    while y < height {
+        let x = 0;
+
+        while x < width {
+            let alive_neighbours = gen_calculate_alive_neigbours(x, y);
+
+            let current_cell = gen[y][x];
+
+            if current_cell == 1 {
+                if alive_neighbours == 2 {
+                    let next_state = 1;
+                } else if alive_neighbours == 3 {
+                    let next_state = 1;
+                } else {
+                    let next_state = 0;
+                }
+            } else if current_cell == 0 {
+                if alive_neighbours == 3 {
+                    let next_state = 1;
+                } else {
+                    let next_state = 0;
+                }
+            } else {
+                let next_state = 0;
+            }
+
+            next_gen[y][x] = next_state;
+
+            x = x + 1;
+        }
+
+        y = y + 1;
+    }
+
+
+    let y = 0;
+
+    while y < height {
+        let x = 0;
+
+        while x < width {
+            gen[y][x] = next_gen[y][x];
+
+            x = x + 1;
+        }
+
+        y = y + 1;
+    }
+}
+
+fn play() {
+    let gen = [];
+
+    let width = 170;
+    let height = 170;
+
+    gen_init(gen);
+    gen_randomize();
+
+    while true {
+        gen_display();
+        gen_update();
+    }
+}
+
+play();

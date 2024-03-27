@@ -72,7 +72,6 @@ fn gen_calculate_alive_neighbours(ix, iy) {
             if dx == 0 {
                 if dy == 0 {
                     dx = dx + 1;
-                    dy = dy + 1;
 
                     continue
                 }
@@ -109,24 +108,20 @@ fn gen_update() {
 
             let current_cell = gen[y][x];
 
+            let next_state = 0;
+
             if current_cell == 1 {
                 if alive_neighbours == 2 {
-                    let next_state = 1;
+                    next_state = 1;
                 } else if alive_neighbours == 3 {
-                    let next_state = 1;
-                } else {
-                    let next_state = 0;
+                    next_state = 1;
                 }
             } else if current_cell == 0 {
                 if alive_neighbours == 3 {
-                    let next_state = 1;
-                } else {
-                    let next_state = 0;
+                    next_state = 1;
                 }
-            } else {
-                let next_state = 0;
             }
-
+            
             next_gen[y][x] = next_state;
 
             x = x + 1;

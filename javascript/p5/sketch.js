@@ -44,7 +44,7 @@ class Generation {
         }
     }
 
-    calculate_alive_neigbours(ix, iy) {
+    calculate_alive_neighbours(ix, iy) {
         let amount = 0;
 
         for (let dy = -1; dy < 2; dy++) {
@@ -70,7 +70,7 @@ class Generation {
 
         for (let y = 0; y < this.height; y++) {
             for (let x = 0; x < this.width; x++) {
-                let alive_neighbours = this.calculate_alive_neigbours(x, y);
+                let alive_neighbours = this.calculate_alive_neighbours(x, y);
 
                 let current_cell = this.cells[y][x];
 

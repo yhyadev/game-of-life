@@ -21,7 +21,7 @@ class Generation:
             for x in range(self.width):
                 self.cells[y][x] = math.floor(random.random() * 2)
 
-    def calculate_alive_neigbours(self, ix: int, iy: int):
+    def calculate_alive_neighbours(self, ix: int, iy: int):
         amount = 0
 
         for dy in range(-1, 2):
@@ -42,7 +42,7 @@ class Generation:
 
         for y in range(self.height):
             for x in range(self.width):
-                alive_neighbours = self.calculate_alive_neigbours(x, y)
+                alive_neighbours = self.calculate_alive_neighbours(x, y)
 
                 current_cell = self.cells[y][x]
 

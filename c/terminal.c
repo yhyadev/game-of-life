@@ -84,9 +84,6 @@ int main(void) {
 	while (true) {
 		generation_display(gen);
 		generation_update(gen);
-
-		for (int i = 0; i < 40000000; i++)
-			;
 	}
 
 	return 0;

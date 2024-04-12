@@ -27,30 +27,22 @@ impl Generation {
     fn random(&mut self) {
         let mut rng = rand::thread_rng();
 
-        for y in 0..self.height {
-            for x in 0..self.width {
-                let index = x + y * self.width;
-
-                self.cells[index] = rng.gen_range(0..2);
-            }
-        }
+        self.cells.fill_with(|| rng.gen_range(0..2));
     }
 
     fn display(&self) {
         for y in 0..self.height {
-            let mut line = String::new();
-
             for x in 0..self.width {
                 let index = x + y * self.width;
 
                 if self.cells[index] == 1 {
-                    line.push('●');
+                    print!("●");
                 } else {
-                    line.push(' ');
+                    print!(" ");
                 }
             }
 
-            println!("{}", line);
+            println!();
         }
     }
 
@@ -76,30 +68,27 @@ impl Generation {
     }
 
     fn update(&mut self) {
-        let mut next_generation = self.clone();
+        let mut next_gen = self.clone();
 
         for y in 0..self.height {
             for x in 0..self.width {
-                let index = x + y * self.width;
-
                 let alive_neighbours = self.calculate_alive_neighbours(x, y);
+
+                let index = x + y * self.width;
 
                 let current_cell = self.cells[index];
 
-                let next_state = if (current_cell == 1
-                    && (alive_neighbours == 2 || alive_neighbours == 3))
+                if (current_cell == 1 && (alive_neighbours == 2 || alive_neighbours == 3))
                     || (current_cell == 0 && alive_neighbours == 3)
                 {
-                    1
+                    next_gen.cells[index] = 1;
                 } else {
-                    0
-                };
-
-                next_generation.cells[index] = next_state;
+                    next_gen.cells[index] = 0;
+                }
             }
         }
 
-        self.cells = next_generation.cells;
+        self.cells = next_gen.cells;
     }
 }
 
@@ -111,7 +100,5 @@ fn main() {
     loop {
         generation.display();
         generation.update();
-
-        for _ in 0..40000000 {}
     }
 }

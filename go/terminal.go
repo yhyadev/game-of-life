@@ -99,8 +99,5 @@ func main() {
 	for {
 		gen.display()
 		gen.update()
-
-		for i := 0; i < 40000000; i++ {
-		}
 	}
 }

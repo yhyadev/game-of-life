@@ -9,7 +9,7 @@ struct Generation {
 
 impl Generation {
     fn new(width: usize, height: usize) -> Generation {
-        let mut cells = Vec::new();
+        let mut cells = Vec::with_capacity(width * height);
 
         for _ in 0..height {
             for _ in 0..width {
@@ -54,7 +54,7 @@ impl Generation {
         }
     }
 
-    fn calculate_alive_neigbours(&self, ix: usize, iy: usize) -> u8 {
+    fn calculate_alive_neighbours(&self, ix: usize, iy: usize) -> u8 {
         let mut amount = 0;
 
         for dy in [self.height - 1, 0, 1].into_iter() {
@@ -82,7 +82,7 @@ impl Generation {
             for x in 0..self.width {
                 let index = x + y * self.width;
 
-                let alive_neighbours = self.calculate_alive_neigbours(x, y);
+                let alive_neighbours = self.calculate_alive_neighbours(x, y);
 
                 let current_cell = self.cells[index];
 

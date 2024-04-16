@@ -1,9 +1,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-float frand(void) { return (float)rand() / (float)RAND_MAX; }
+#include "common.h"
 
 #define GENERATION_WIDTH 170
 #define GENERATION_HEIGHT 170

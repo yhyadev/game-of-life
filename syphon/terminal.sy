@@ -13,10 +13,10 @@ fn gen_init(gen) {
         while x < width {
             array_push(gen[y], 0);
 
-            x = x + 1;
+            x += 1;
         }
 
-        y = y + 1;
+        y += 1;
     }
 }
 
@@ -33,12 +33,12 @@ fn gen_display() {
                 print(" ");
             }
 
-            x = x + 1;
+            x += 1;
         }
 
         println();
 
-        y = y + 1;
+        y += 1;
     }
 }
 
@@ -53,10 +53,10 @@ fn gen_randomize() {
                 gen[y][x] = 1;
             }
 
-            x = x + 1;
+            x += 1;
         }
 
-        y = y + 1;
+        y += 1;
     }
 }
 
@@ -71,7 +71,7 @@ fn gen_calculate_alive_neighbours(ix, iy) {
         while dx < 2 {
             if dx == 0 {
                 if dy == 0 {
-                    dx = dx + 1;
+                    dx += 1;
 
                     continue
                 }
@@ -81,13 +81,13 @@ fn gen_calculate_alive_neighbours(ix, iy) {
             let y = (iy + dy) % height;
 
             if gen[y][x] {
-                amount = amount + 1;
+                amount += 1;
             }
 
-            dx = dx + 1;
+            dx += 1;
         }
 
-        dy = dy + 1;
+        dy += 1;
     }
 
     return amount;
@@ -124,10 +124,10 @@ fn gen_update() {
             
             next_gen[y][x] = next_state;
 
-            x = x + 1;
+            x += 1;
         }
 
-        y = y + 1;
+        y += 1;
     }
 
 
@@ -139,10 +139,10 @@ fn gen_update() {
         while x < width {
             gen[y][x] = next_gen[y][x];
 
-            x = x + 1;
+            x += 1;
         }
 
-        y = y + 1;
+        y += 1;
     }
 }
 

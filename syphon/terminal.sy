@@ -1,7 +1,3 @@
-fn floor(n) {
-    return n - n % 1;
-}
-
 fn gen_init(gen) {
     let y = 0;
 
@@ -49,9 +45,7 @@ fn gen_randomize() {
         let x = 0;
 
         while x < width {
-            if random(0, 2) > 0.95 {
-                gen[y][x] = 1;
-            }
+            gen[y][x] = to_int(random(0, 2));
 
             x += 1;
         }

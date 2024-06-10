@@ -24,7 +24,7 @@ fn gen_display() {
 
         while x < width {
             if gen[y][x] {
-                print("*");
+                print("●");
             } else {
                 print(" ");
             }

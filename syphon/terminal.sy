@@ -1,158 +1,158 @@
 fn gen_init(gen) {
-    let y = 0;
+    y = 0
 
     while y < height {
-        array_push(gen, []);
+        array_push(gen, [])
 
-        let x = 0;
+        x = 0
 
         while x < width {
-            array_push(gen[y], 0);
+            array_push(gen[y], 0)
 
-            x += 1;
+            x += 1
         }
 
-        y += 1;
+        y += 1
     }
 }
 
 fn gen_display() {
-    let y = 0;
+    y = 0
 
     while y < height {
-        let x = 0;
+        x = 0
 
         while x < width {
             if gen[y][x] {
-                print("●");
+                print("●")
             } else {
-                print(" ");
+                print(" ")
             }
 
-            x += 1;
+            x += 1
         }
 
-        println();
+        println()
 
-        y += 1;
+        y += 1
     }
 }
 
 fn gen_randomize() {
-    let y = 0;
+    y = 0
 
     while y < height {
-        let x = 0;
+        x = 0
 
         while x < width {
-            gen[y][x] = to_int(random(0, 2));
+            gen[y][x] = to_int(random(0, 2))
 
-            x += 1;
+            x += 1
         }
 
-        y += 1;
+        y += 1
     }
 }
 
 fn gen_calculate_alive_neighbours(ix, iy) {
-    let amount = 0;
+    amount = 0
 
-    let dy = -1;
+    dy = -1
 
     while dy < 2 {
-        let dx = -1;
+        dx = -1
 
         while dx < 2 {
             if dx == 0 {
                 if dy == 0 {
-                    dx += 1;
+                    dx += 1
 
                     continue
                 }
             }
 
-            let x = (ix + dx) % width;
-            let y = (iy + dy) % height;
+            x = (ix + dx) % width
+            y = (iy + dy) % height
 
             if gen[y][x] {
-                amount += 1;
+                amount += 1
             }
 
-            dx += 1;
+            dx += 1
         }
 
-        dy += 1;
+        dy += 1
     }
 
-    return amount;
+    return amount
 }
 
 fn gen_update() {
-    let next_gen = [];
+    next_gen = []
 
-    gen_init(next_gen);
+    gen_init(next_gen)
 
-    let y = 0;
+    y = 0
 
     while y < height {
-        let x = 0;
+        x = 0
 
         while x < width {
-            let alive_neighbours = gen_calculate_alive_neighbours(x, y);
+            alive_neighbours = gen_calculate_alive_neighbours(x, y)
 
-            let current_cell = gen[y][x];
+            current_cell = gen[y][x]
 
-            let next_state = 0;
+            next_state = 0
 
             if current_cell == 1 {
                 if alive_neighbours == 2 {
-                    next_state = 1;
+                    next_state = 1
                 } else if alive_neighbours == 3 {
-                    next_state = 1;
+                    next_state = 1
                 }
             } else if current_cell == 0 {
                 if alive_neighbours == 3 {
-                    next_state = 1;
+                    next_state = 1
                 }
             }
             
-            next_gen[y][x] = next_state;
+            next_gen[y][x] = next_state
 
-            x += 1;
+            x += 1
         }
 
-        y += 1;
+        y += 1
     }
 
 
-    let y = 0;
+    y = 0
 
     while y < height {
-        let x = 0;
+        x = 0
 
         while x < width {
-            gen[y][x] = next_gen[y][x];
+            gen[y][x] = next_gen[y][x]
 
-            x += 1;
+            x += 1
         }
 
-        y += 1;
+        y += 1
     }
 }
 
 fn play() {
-    let gen = [];
+    gen = []
 
-    let width = 170;
-    let height = 170;
+    width = 170
+    height = 170
 
-    gen_init(gen);
-    gen_randomize();
+    gen_init(gen)
+    gen_randomize()
 
     while true {
-        gen_display();
-        gen_update();
+        gen_display()
+        gen_update()
     }
 }
 
-play();
+play()

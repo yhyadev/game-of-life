@@ -1,4 +1,4 @@
-fn gen_init(gen) {
+gen_init = fn (gen) {
     y = 0
 
     while y < height {
@@ -16,7 +16,7 @@ fn gen_init(gen) {
     }
 }
 
-fn gen_display() {
+gen_display = fn () {
     y = 0
 
     while y < height {
@@ -38,7 +38,7 @@ fn gen_display() {
     }
 }
 
-fn gen_randomize() {
+gen_randomize = fn () {
     y = 0
 
     while y < height {
@@ -54,7 +54,7 @@ fn gen_randomize() {
     }
 }
 
-fn gen_calculate_alive_neighbours(ix, iy) {
+gen_calculate_alive_neighbours = fn (ix, iy) {
     amount = 0
 
     dy = -1
@@ -87,7 +87,7 @@ fn gen_calculate_alive_neighbours(ix, iy) {
     return amount
 }
 
-fn gen_update() {
+gen_update = fn () {
     next_gen = []
 
     gen_init(next_gen)
@@ -140,7 +140,7 @@ fn gen_update() {
     }
 }
 
-fn play() {
+play = fn () {
     gen = []
 
     width = 170

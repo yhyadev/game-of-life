@@ -1,4 +1,4 @@
-gen_init = fn (gen) {
+gen_init = fn (gen, width, height) {
     y = 0
 
     while y < height {
@@ -16,7 +16,7 @@ gen_init = fn (gen) {
     }
 }
 
-gen_display = fn () {
+gen_display = fn (gen, width, height) {
     y = 0
 
     while y < height {
@@ -38,7 +38,7 @@ gen_display = fn () {
     }
 }
 
-gen_randomize = fn () {
+gen_randomize = fn (gen, width, height) {
     y = 0
 
     while y < height {
@@ -54,7 +54,7 @@ gen_randomize = fn () {
     }
 }
 
-gen_calculate_alive_neighbours = fn (ix, iy) {
+gen_calculate_alive_neighbours = fn (gen, width, height, ix, iy) {
     amount = 0
 
     dy = -1
@@ -87,10 +87,10 @@ gen_calculate_alive_neighbours = fn (ix, iy) {
     return amount
 }
 
-gen_update = fn () {
+gen_update = fn (gen, width, height) {
     next_gen = []
 
-    gen_init(next_gen)
+    gen_init(next_gen, width, height)
 
     y = 0
 
@@ -98,7 +98,7 @@ gen_update = fn () {
         x = 0
 
         while x < width {
-            alive_neighbours = gen_calculate_alive_neighbours(x, y)
+            alive_neighbours = gen_calculate_alive_neighbours(gen, width, height, x, y)
 
             current_cell = gen[y][x]
 
@@ -146,12 +146,12 @@ play = fn () {
     width = 170
     height = 170
 
-    gen_init(gen)
-    gen_randomize()
+    gen_init(gen, width, height)
+    gen_randomize(gen, width, height)
 
     while true {
-        gen_display()
-        gen_update()
+        gen_display(gen, width, height)
+        gen_update(gen, width, height)
     }
 }
 

@@ -1,13 +1,9 @@
 module terminal;
 
 import std::io;
+import std::math::random;
 
-import libc;
-
-
-fn float frand() {
-    return (float)libc::rand() / (float)libc::RAND_MAX;
-}
+DefaultRandom rand;
 
 fn usz mod(usz a, usz b) {
     return ((a % b) + b) % b;
@@ -31,7 +27,7 @@ fn void generation_display(Generation *gen) {
 fn void generation_random(Generation *gen) {
     for (usz y = 0; y < GENERATION_HEIGHT; y++) {
         for (usz x = 0; x < GENERATION_WIDTH; x++) {
-            (*gen)[y][x] = (int)(frand() * 2);
+            (*gen)[y][x] = (int)(random::next_float(&rand) * 2);
         }
     }
 }
@@ -80,6 +76,8 @@ fn void generation_update(Generation *gen) {
 
 fn void main() {
     Generation gen;
+
+    random::seed_entropy(&rand);
 
     generation_random(&gen);
 

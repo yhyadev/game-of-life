@@ -5,10 +5,6 @@ import std::math::random;
 
 DefaultRandom rand;
 
-fn usz mod(usz a, usz b) {
-    return ((a % b) + b) % b;
-}
-
 const usz GENERATION_WIDTH = 170;
 const usz GENERATION_HEIGHT = 170;
 
@@ -31,6 +27,8 @@ fn void generation_random(Generation *gen) {
         }
     }
 }
+
+fn usz mod(usz a, usz b) => ((a % b) + b) % b;
 
 fn int generation_calculate_alive_neighbours(Generation *gen, usz ix, usz iy) {
     int amount = 0;

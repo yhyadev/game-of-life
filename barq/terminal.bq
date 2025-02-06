@@ -1,7 +1,7 @@
 module game_of_life;
 
-import "std/c/io.cerm";
-import "std/c/random.cerm";
+import "std/c/io.bq";
+import "std/c/random.bq";
 
 type Generation = [170][170]u1;
 

@@ -1,7 +1,4 @@
-module game_of_life;
-
-import "std/c/io.bq";
-import "std/c/random.bq";
+const std = @import("std");
 
 type Generation = [170][170]u1;
 
@@ -18,15 +15,15 @@ fn generation_display(gen *Generation) {
 
         while x < GENERATION_WIDTH {
             if gen[y][x] == 1 {
-                std::c::printf("●");
+                std.c.printf("●");
             } else {
-                std::c::printf(" ");
+                std.c.printf(" ");
             }
 
             x += 1;
         }
 
-        std::c::printf("\n");
+        std.c.printf("\n");
 
         y += 1;
     }
@@ -39,7 +36,7 @@ fn generation_random(gen *Generation) {
         var x usize = 0;
 
         while x < GENERATION_WIDTH {
-            gen[y][x] = (std::c::rand() % 2) as u1;
+            gen[y][x] = (std.c.rand() % 2) as u1;
 
             x += 1;
         }

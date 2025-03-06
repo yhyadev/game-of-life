@@ -1,19 +1,19 @@
-const std = @import("std");
+std :: @import("std");
 
-type Generation = [170][170]u1;
+width :: 170;
+height :: 170;
 
-const GENERATION_WIDTH = 170;
-const GENERATION_HEIGHT = 170;
+Generation :: [height][width]u1;
 
-fn mod(a ssize, b ssize) ssize { return ((a % b) + b) % b; }
+mod :: fn (a: ssize, b: ssize) ssize { return ((a % b) + b) % b; }
 
-fn generation_display(gen *Generation) {
-    var y usize = 0;
+display :: fn (gen: *Generation) {
+    y: usize = 0;
 
-    while y < GENERATION_HEIGHT {
-        var x usize = 0;
+    while y < height {
+        x: usize = 0;
 
-        while x < GENERATION_WIDTH {
+        while x < width {
             if gen[y][x] == 1 {
                 std.c.printf("●");
             } else {
@@ -29,13 +29,13 @@ fn generation_display(gen *Generation) {
     }
 }
 
-fn generation_random(gen *Generation) {
-    var y usize = 0;
+random :: fn (gen: *Generation) {
+    y: usize = 0;
 
-    while y < GENERATION_HEIGHT {
-        var x usize = 0;
+    while y < height {
+        x: usize = 0;
 
-        while x < GENERATION_WIDTH {
+        while x < width {
             gen[y][x] = (std.c.rand() % 2) as u1;
 
             x += 1;
@@ -45,13 +45,13 @@ fn generation_random(gen *Generation) {
     }
 }
 
-fn generation_calculate_alive_neighbours(gen *Generation, ix usize, iy usize) u32 {
-    var amount u32 = 0;
+calculate_alive_neighbours :: fn (gen: *Generation, ix: usize, iy: usize) u32 {
+    amount: u32 = 0;
 
-    var dy ssize = -1;
+    dy: ssize = -1;
     
     while dy < 2 {
-        var dx ssize = -1;
+        dx: ssize = -1;
 
         while dx < 2 {
             if (dx == 0) & (dy == 0) {
@@ -60,8 +60,8 @@ fn generation_calculate_alive_neighbours(gen *Generation, ix usize, iy usize) u3
                 continue;
             }
 
-            var x = mod((ix as ssize + dx), GENERATION_WIDTH) as usize;
-            var y = mod((iy as ssize + dy), GENERATION_HEIGHT) as usize;
+            x := mod((ix as ssize + dx), width) as usize;
+            y := mod((iy as ssize + dy), height) as usize;
 
             amount = amount + gen[y][x];
 
@@ -74,20 +74,20 @@ fn generation_calculate_alive_neighbours(gen *Generation, ix usize, iy usize) u3
     return amount;
 }
 
-fn generation_update(gen *Generation) {
-    var next_gen Generation;
+update :: fn (gen: *Generation) {
+    next_gen: Generation;
 
-    var y usize = 0;
+    y: usize = 0;
 
-    while y < GENERATION_HEIGHT {
-        var x usize = 0;
+    while y < height {
+        x: usize = 0;
 
-        while x < GENERATION_WIDTH {
-            var alive_neighbours = generation_calculate_alive_neighbours(gen, x, y);
+        while x < width {
+            alive_neighbours := calculate_alive_neighbours(gen, x, y);
 
-            var current_cell = gen[y][x];
+            current_cell := gen[y][x];
 
-            var next_state = (((current_cell == 1) & ((alive_neighbours == 2) | (alive_neighbours == 3)))
+            next_state := (((current_cell == 1) & ((alive_neighbours == 2) | (alive_neighbours == 3)))
                             | ((current_cell == 0) & (alive_neighbours == 3)));
 
             next_gen[y][x] = next_state as u1;
@@ -100,10 +100,10 @@ fn generation_update(gen *Generation) {
 
     y = 0;
 
-    while y < GENERATION_HEIGHT {
-        var x usize = 0;
+    while y < height {
+        x: usize = 0;
 
-        while x < GENERATION_WIDTH {
+        while x < width {
             gen[y][x] = next_gen[y][x];
 
             x += 1;
@@ -113,14 +113,14 @@ fn generation_update(gen *Generation) {
     }
 }
 
-export fn main() u8 {
-    var gen Generation;
+main :: fn () u8 @foreign("main") {
+    gen: Generation;
 
-    generation_random(&gen);
+    random(&gen);
 
     while true {
-        generation_display(&gen);
-        generation_update(&gen);
+        display(&gen);
+        update(&gen);
     }
 
     return 0;

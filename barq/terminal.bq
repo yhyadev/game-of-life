@@ -5,13 +5,13 @@ height :: 170;
 
 Generation :: [height][width]u1;
 
-mod :: fn (a: ssize, b: ssize) ssize { return ((a % b) + b) % b; }
+mod :: fn (a : ssize, b : ssize) ssize { return ((a % b) + b) % b; }
 
-display :: fn (gen: *Generation) {
-    y: usize = 0;
+display :: fn (gen : *Generation) {
+    y : usize = 0;
 
     while y < height {
-        x: usize = 0;
+        x : usize = 0;
 
         while x < width {
             if gen[y][x] == 1 {
@@ -29,11 +29,11 @@ display :: fn (gen: *Generation) {
     }
 }
 
-random :: fn (gen: *Generation) {
-    y: usize = 0;
+random :: fn (gen : *Generation) {
+    y : usize = 0;
 
     while y < height {
-        x: usize = 0;
+        x : usize = 0;
 
         while x < width {
             gen[y][x] = (std.c.rand() % 2) as u1;
@@ -45,13 +45,13 @@ random :: fn (gen: *Generation) {
     }
 }
 
-calculate_alive_neighbours :: fn (gen: *Generation, ix: usize, iy: usize) u32 {
-    amount: u32 = 0;
+calculate_alive_neighbours :: fn (gen : *Generation, ix : usize, iy : usize) u32 {
+    amount : u32 = 0;
 
-    dy: ssize = -1;
+    dy : ssize = -1;
     
     while dy < 2 {
-        dx: ssize = -1;
+        dx : ssize = -1;
 
         while dx < 2 {
             if (dx == 0) & (dy == 0) {
@@ -74,13 +74,13 @@ calculate_alive_neighbours :: fn (gen: *Generation, ix: usize, iy: usize) u32 {
     return amount;
 }
 
-update :: fn (gen: *Generation) {
-    next_gen: Generation;
+update :: fn (gen : *Generation) {
+    next_gen : Generation;
 
-    y: usize = 0;
+    y : usize = 0;
 
     while y < height {
-        x: usize = 0;
+        x : usize = 0;
 
         while x < width {
             alive_neighbours := calculate_alive_neighbours(gen, x, y);
@@ -101,7 +101,7 @@ update :: fn (gen: *Generation) {
     y = 0;
 
     while y < height {
-        x: usize = 0;
+        x : usize = 0;
 
         while x < width {
             gen[y][x] = next_gen[y][x];
@@ -114,7 +114,7 @@ update :: fn (gen: *Generation) {
 }
 
 main :: fn () u8 @foreign("main") {
-    gen: Generation;
+    gen : Generation;
 
     random(&gen);
 

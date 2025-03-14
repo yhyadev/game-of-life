@@ -1,41 +1,31 @@
 use rand::Rng;
 
 #[derive(Clone)]
-struct Generation {
-    cells: Vec<u8>,
-    width: usize,
-    height: usize,
+struct Generation<const WIDTH: usize, const HEIGHT: usize> {
+    board: [[u8; WIDTH]; HEIGHT],
 }
 
-impl Generation {
-    fn new(width: usize, height: usize) -> Generation {
-        let mut cells = Vec::with_capacity(width * height);
-
-        for _ in 0..height {
-            for _ in 0..width {
-                cells.push(0);
-            }
-        }
-
+impl<const WIDTH: usize, const HEIGHT: usize> Generation<WIDTH, HEIGHT> {
+    fn new() -> Self {
         Generation {
-            cells,
-            width,
-            height,
+            board: [[0; WIDTH]; HEIGHT],
         }
     }
 
     fn random(&mut self) {
         let mut rng = rand::thread_rng();
 
-        self.cells.fill_with(|| rng.gen_range(0..2));
+        for row in &mut self.board {
+            for cell in row {
+                *cell = rng.gen_range(0..2);
+            }
+        }
     }
 
     fn display(&self) {
-        for y in 0..self.height {
-            for x in 0..self.width {
-                let index = x + y * self.width;
-
-                if self.cells[index] == 1 {
+        for row in &self.board {
+            for cell in row {
+                if *cell == 1 {
                     print!("●");
                 } else {
                     print!(" ");
@@ -49,18 +39,16 @@ impl Generation {
     fn calculate_alive_neighbours(&self, ix: usize, iy: usize) -> u8 {
         let mut amount = 0;
 
-        for dy in [self.height - 1, 0, 1].into_iter() {
-            for dx in [self.width - 1, 0, 1].into_iter() {
+        for dy in [HEIGHT - 1, 0, 1].into_iter() {
+            for dx in [WIDTH - 1, 0, 1].into_iter() {
                 if dx == 0 && dy == 0 {
                     continue;
                 }
 
-                let x = (ix + dx) % self.width;
-                let y = (iy + dy) % self.height;
+                let x = (ix + dx) % WIDTH;
+                let y = (iy + dy) % HEIGHT;
 
-                let index = x + y * self.width;
-
-                amount += self.cells[index];
+                amount += self.board[y][x];
             }
         }
 
@@ -68,32 +56,34 @@ impl Generation {
     }
 
     fn update(&mut self) {
-        let mut next_gen = self.clone();
+        let mut next = Self::new();
 
-        for y in 0..self.height {
-            for x in 0..self.width {
+        for (y, (cur_row, next_row)) in (&self.board).into_iter().zip(&mut next.board).enumerate() {
+            for (x, (curr_cell, next_cell)) in cur_row.into_iter().zip(next_row).enumerate() {
                 let alive_neighbours = self.calculate_alive_neighbours(x, y);
 
-                let index = x + y * self.width;
+                *next_cell = match *curr_cell {
+                    0 => match alive_neighbours {
+                        3 => 1,
+                        _ => 0,
+                    },
 
-                let current_cell = self.cells[index];
+                    1 => match alive_neighbours {
+                        2 | 3 => 1,
+                        _ => 0,
+                    },
 
-                if (current_cell == 1 && (alive_neighbours == 2 || alive_neighbours == 3))
-                    || (current_cell == 0 && alive_neighbours == 3)
-                {
-                    next_gen.cells[index] = 1;
-                } else {
-                    next_gen.cells[index] = 0;
-                }
+                    _ => 0,
+                };
             }
         }
 
-        self.cells = next_gen.cells;
+        self.board = next.board;
     }
 }
 
 fn main() {
-    let mut generation = Generation::new(170, 170);
+    let mut generation = Generation::<170, 170>::new();
 
     generation.random();
 

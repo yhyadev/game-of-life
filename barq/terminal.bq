@@ -60,8 +60,8 @@ calculate_alive_neighbours :: fn (gen : *Generation, ix : usize, iy : usize) u32
                 continue;
             }
 
-            x := mod((ix as ssize + dx), width) as usize;
-            y := mod((iy as ssize + dy), height) as usize;
+            x :: mod((ix as ssize + dx), width) as usize;
+            y :: mod((iy as ssize + dy), height) as usize;
 
             amount = amount + gen[y][x];
 
@@ -83,11 +83,11 @@ update :: fn (gen : *Generation) {
         x : usize = 0;
 
         while x < width {
-            alive_neighbours := calculate_alive_neighbours(gen, x, y);
+            alive_neighbours :: calculate_alive_neighbours(gen, x, y);
 
-            current_cell := gen[y][x];
+            current_cell :: gen[y][x];
 
-            next_state := (((current_cell == 1) & ((alive_neighbours == 2) | (alive_neighbours == 3)))
+            next_state :: (((current_cell == 1) & ((alive_neighbours == 2) | (alive_neighbours == 3)))
                             | ((current_cell == 0) & (alive_neighbours == 3)));
 
             next_gen[y][x] = next_state as u1;

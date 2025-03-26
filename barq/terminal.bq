@@ -75,7 +75,7 @@ calculate_alive_neighbours :: fn (gen : *Generation, ix : usize, iy : usize) u32
 }
 
 update :: fn (gen : *Generation) {
-    next_gen : Generation;
+    next_gen := @uninitialized(Generation);
 
     y : usize = 0;
 
@@ -114,7 +114,7 @@ update :: fn (gen : *Generation) {
 }
 
 main :: fn () u8 @foreign("main") {
-    gen : Generation;
+    gen := @uninitialized(Generation);
 
     random(&gen);
 
